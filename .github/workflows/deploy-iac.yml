@@ -1,0 +1,60 @@
+env:
+    AZURE_SUB: '5a7dde51-48d3-479b-bdca-47664dfc5d25'
+    scriptlocation: './iac.bicep'
+  
+on:
+    workflow_dispatch:
+  
+name: Bicep_Deployment
+jobs:
+  validate: 
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_BICEP_SERVICE_PRINCIPAL }}
+    - uses: azure/arm-deploy@v1
+      name: Run preflight validation
+      with:
+        scope: subscription
+        subscriptionId: ${{ env.AZURE_SUB }}
+        template: ${{ env.scriptlocation }}
+        region: 'uksouth'
+        failOnStdErr: false 
+        deploymentMode: validate
+
+  build_whatif_IAC:
+    needs: [validate]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_BICEP_SERVICE_PRINCIPAL }}
+    - name: Run what-if 
+      uses: azure/arm-deploy@v1
+      with:
+        scope: subscription
+        subscriptionId: ${{ env.AZURE_SUB }}
+        template: ${{ env.scriptlocation }}
+        region: 'uksouth'
+        failOnStdErr: false 
+        additionalArguments: --what-if
+
+  build_IAC:
+    needs: [validate, build_whatif_IAC ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_BICEP_SERVICE_PRINCIPAL }}
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        scope: subscription
+        subscriptionId: ${{ env.AZURE_SUB }}
+        template: ${{ env.scriptlocation }}
+        region: 'uksouth'
+        failOnStdErr: false 
