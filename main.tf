@@ -31,13 +31,13 @@ provider "azurerm" {
 }
 
 module "azurerm_resource_group" {
-  source = "../Terraform_Deployment/terraform/azurerm_resource_group"
+  source = "./Terraform_Deployment/terraform/azurerm_resource_group"
   location = "uksouth"
   resource_group_name = "cloud-migration-terraform"
 }
 
 module "azurerm_vnet" {
-  source = "../Terraform_Deployment/terraform/azurerm_vnet"
+  source = "./Terraform_Deployment/terraform/azurerm_vnet"
   virtual_network_name = "cmt-poc-vnt-uks"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
@@ -46,7 +46,7 @@ module "azurerm_vnet" {
 }
 
 module "azurerm_appgw_subnet" {
-  source = "../Terraform_Deployment/terraform/azurerm_subnet"
+  source = "./Terraform_Deployment/terraform/azurerm_subnet"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.0.0/24"]
@@ -55,7 +55,7 @@ module "azurerm_appgw_subnet" {
 }
 
 module "azurerm_db_subnet" {
-  source = "../Terraform_Deployment/terraform/azurerm_subnet"
+  source = "./Terraform_Deployment/terraform/azurerm_subnet"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.2.0/24"]
@@ -64,7 +64,7 @@ module "azurerm_db_subnet" {
 }
 
 module "azurerm_web_subnet" {
-  source = "../Terraform_Deployment/terraform/azurerm_subnet"
+  source = "./Terraform_Deployment/terraform/azurerm_subnet"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.1.0/24"]
@@ -73,7 +73,7 @@ module "azurerm_web_subnet" {
 }
 
 module "azurerm_appgw" {
-  source = "../Terraform_Deployment/terraform/azurerm_app_gateway"
+  source = "./Terraform_Deployment/terraform/azurerm_app_gateway"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   appgw_subnet_name = "appgwaf_snt_cmt_poc001"
@@ -94,7 +94,7 @@ module "azurerm_appgw" {
 }
 
 module "azurerm_vmss" {
-  source = "../Terraform_Deployment/terraform/azurerm_vmss"
+  source = "./Terraform_Deployment/terraform/azurerm_vmss"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
@@ -107,7 +107,7 @@ module "azurerm_vmss" {
 }
 
 module "azurerm_key_vault" {
-  source = "../Terraform_Deployment/terraform/azurerm_keyvault"
+  source = "./Terraform_Deployment/terraform/azurerm_keyvault"
   kv_name = "kvcmppoc"
   sub_resource_name = "vault"
   private_dns_name = "privatelink.vaultcore.azure.net"
@@ -118,7 +118,7 @@ module "azurerm_key_vault" {
 }
 
 module "azurerm_sql" {
-  source = "../Terraform_Deployment/terraform/azurerm_mssql_server"
+  source = "./Terraform_Deployment/terraform/azurerm_mssql_server"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   mssql_server_name = "cmpftpoc-server"
@@ -132,7 +132,7 @@ module "azurerm_sql" {
 }
 
 module "azurerm_storage_account" {
-  source = "../Terraform_Deployment/terraform/azurerm_storage_account"
+  source = "./Terraform_Deployment/terraform/azurerm_storage_account"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   account_replication_type = "LRS"
@@ -141,7 +141,7 @@ module "azurerm_storage_account" {
 }
 
 module "azurerm_cosmosdb_account" {
-  source = "../Terraform_Deployment/terraform/azurerm_cosmos_db"
+  source = "./Terraform_Deployment/terraform/azurerm_cosmos_db"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   offer_type = "Standard"
