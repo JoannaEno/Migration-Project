@@ -1,0 +1,10 @@
+resource_group_name = "cloud-migration-terraform"
+location = "uksouth"
+mssql_server_name = "cmpftpoc-server"
+administrator_login = "joanna"
+administrator_login_password = "j$#oaJUTna23_45$"
+mssql_database_name = "cmp-db-poc"
+max_size_gb = 30
+min_capacity = 1
+private_endpoint_subnet_name = "db_snt_cmt_poc001"
+virtual_network_name = "cmt-poc-vnt-uks"
