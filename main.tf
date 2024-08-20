@@ -77,9 +77,9 @@ module "azurerm_appgw" {
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   appgw_subnet_name = "appgwaf_snt_cmt_poc001"
-  appgw_public_ip = "appgw_pip"
-  domain_name_label = "cmppip"
-  app_gateway_name = "cmpappgwuks"
+  appgw_public_ip = "joannaappgw_pip"
+  domain_name_label = "joannacmppip"
+  app_gateway_name = "joannacmpappgwuks"
   sku_name = "Standard_v2"
   sku_tier = "Standard_v2"
   appgw_congif_pip = "cmp-ip-configuration"
@@ -108,7 +108,7 @@ module "azurerm_vmss" {
 
 module "azurerm_key_vault" {
   source = "./Terraform_Deployment/terraform/azurerm_keyvault"
-  kv_name = "kvcmppoc"
+  kv_name = "joannakvcmppoc"
   sub_resource_name = "vault"
   private_dns_name = "privatelink.vaultcore.azure.net"
   private_endpoint_subnet_name = "db_snt_cmt_poc001"
@@ -137,7 +137,7 @@ module "azurerm_storage_account" {
   location = "uksouth"
   account_replication_type = "LRS"
   account_tier = "Standard"
-  storage_account_name = "saukspoccmptf"
+  storage_account_name = "joannasaukspoccmptf"
 }
 
 module "azurerm_cosmosdb_account" {
