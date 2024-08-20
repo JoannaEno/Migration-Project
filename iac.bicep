@@ -170,7 +170,7 @@ module keyVaultBicep './modules/Security/Microsoft.KeyVault/vaults/deploy.bicep'
   scope: resourceGroup(resourcegroup.name)
   params: {
     location: location
-    name: 'keyVaults-${env}'
+    name: 'joannaKv-${env}'
   }
 }
 
@@ -190,7 +190,7 @@ module storageAccountBicep './modules/Storage/storageAccounts/stg.bicep' = {
   scope: resourceGroup(resourcegroup.name)
   params: {
     location: location
-    name: 'enostgdiaglogs${env}'
+    name: 'joannastgdiaglogs${env}'
     storageAccountSku: 'Standard_LRS'
   }
 }
