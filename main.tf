@@ -149,3 +149,22 @@ module "azurerm_cosmosdb_account" {
   cosmos_db_name = "cmp-cosmos-mongo-db"
 }
 
+module "azurerm_network_security_group" {
+  source  = "Azure/network-security-group/azurerm"
+  resource_group_name = module.azurerm_resource_group.resource_group_name
+  location = "uksouth"
+  version = "4.1.0"
+  security_group_name = "cmp-nsg"
+  
+  # security_rule {
+  #   name                       = "cmp-nsg123"
+  #   priority                   = 100
+  #   direction                  = "Inbound"
+  #   access                     = "Allow"
+  #   protocol                   = "Tcp"
+  #   source_port_range          = "*"
+  #   destination_port_range     = "*"
+  #   source_address_prefix      = "*"
+  #   destination_address_prefix = "*"
+  # }
+}

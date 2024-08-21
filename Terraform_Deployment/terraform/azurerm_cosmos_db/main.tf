@@ -39,10 +39,3 @@ resource "azurerm_cosmosdb_account" "db" {
     failover_priority = 1
   }
 }
-
-resource "azurerm_cosmosdb_mongo_database" "example" {
-  name                = var.cosmos_db_name
-  resource_group_name = var.resource_group_name
-  account_name        = azurerm_cosmosdb_account.db.name
-  throughput          = 400
-}
