@@ -149,6 +149,7 @@ module "azurerm_cosmosdb_account" {
   cosmos_db_name = "cmp-cosmos-mongo-db-tf"
 }
 
+
 # module "azurerm_network_security_group" {
 #   source  = "Azure/network-security-group/azurerm"
 #   resource_group_name = module.azurerm_resource_group.resource_group_name
@@ -167,4 +168,3 @@ module "azurerm_cosmosdb_account" {
   #   source_address_prefix      = "*"
   #   destination_address_prefix = "*"
   # }
-}
