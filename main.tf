@@ -33,7 +33,7 @@ provider "azurerm" {
 module "azurerm_resource_group" {
   source = "./Terraform_Deployment/terraform/azurerm_resource_group"
   location = "uksouth"
-  resource_group_name = "cloud-migration-terraform"
+  resource_group_name = "cloud-migration-tf"
 }
 
 module "azurerm_vnet" {
