@@ -38,7 +38,7 @@ module "azurerm_resource_group" {
 
 module "azurerm_vnet" {
   source = "./Terraform_Deployment/terraform/azurerm_vnet"
-  virtual_network_name = "cmt-poc-vnt-uks"
+  virtual_network_name = "cmt-poc-vnt-uks-tf"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   address_space = "172.19.0.0/16"
@@ -50,7 +50,7 @@ module "azurerm_appgw_subnet" {
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.0.0/24"]
-  subnet_name = "appgwaf_snt_cmt_poc001"
+  subnet_name = "appgwaf_snt_cmt_poc001_tf"
   # depends_on = [ module.azurerm_vnet ]
 }
 
@@ -59,7 +59,7 @@ module "azurerm_db_subnet" {
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.2.0/24"]
-  subnet_name = "db_snt_cmt_poc001"
+  subnet_name = "db_snt_cmt_poc001_tf"
   # depends_on = [ module.azurerm_vnet ]
 }
 
@@ -68,7 +68,7 @@ module "azurerm_web_subnet" {
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
   address_prefixes = ["172.19.1.0/24"]
-  subnet_name = "web_snt_cmt_poc001"
+  subnet_name = "web_snt_cmt_poc001_tf"
   # depends_on = [ module.azurerm_vnet ]
 }
 
@@ -76,10 +76,10 @@ module "azurerm_appgw" {
   source = "./Terraform_Deployment/terraform/azurerm_app_gateway"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
   resource_group_name = module.azurerm_resource_group.resource_group_name
-  appgw_subnet_name = "appgwaf_snt_cmt_poc001"
-  appgw_public_ip = "joannaappgw_pip"
-  domain_name_label = "joannacmppip"
-  app_gateway_name = "joannacmpappgwuks"
+  appgw_subnet_name = "appgwaf_snt_cmt_poc001_tf"
+  appgw_public_ip = "joannaappgw_pip_tf"
+  domain_name_label = "joannacmppiptf"
+  app_gateway_name = "joannacmpappgwukstf"
   sku_name = "Standard_v2"
   sku_tier = "Standard_v2"
   appgw_congif_pip = "cmp-ip-configuration"
@@ -98,8 +98,8 @@ module "azurerm_vmss" {
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   virtual_network_name = module.azurerm_vnet.virtual_network_name
-  vmss_subnet_name = "web_snt_cmt_poc001"
-  vmss_name = "ukspocvmss"
+  vmss_subnet_name = "web_snt_cmt_poc001_tf"
+  vmss_name = "ukspocvmsstf"
   vmss_sku = "Standard_F2"
   rsv_name = "rsv-cmp-poc"
   subnet_id = module.azurerm_web_subnet.subnet_id
@@ -108,7 +108,7 @@ module "azurerm_vmss" {
 
 module "azurerm_key_vault" {
   source = "./Terraform_Deployment/terraform/azurerm_keyvault"
-  kv_name = "joannakvcmppoc"
+  kv_name = "joannakvcmppoctf"
   sub_resource_name = "vault"
   private_dns_name = "privatelink.vaultcore.azure.net"
   private_endpoint_subnet_name = "db_snt_cmt_poc001"
@@ -121,7 +121,7 @@ module "azurerm_sql" {
   source = "./Terraform_Deployment/terraform/azurerm_mssql_server"
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
-  mssql_server_name = "cmpftpoc-server"
+  mssql_server_name = "cmpftpoc-server-tf"
   administrator_login = "joanna"
   administrator_login_password = "j$#oaJUTna23_45$"
   mssql_database_name = "cmp-db-poc"
@@ -137,7 +137,7 @@ module "azurerm_storage_account" {
   location = "uksouth"
   account_replication_type = "LRS"
   account_tier = "Standard"
-  storage_account_name = "joannasaukspoccmptf"
+  storage_account_name = "joannasaukspoccmptf1"
 }
 
 module "azurerm_cosmosdb_account" {
@@ -146,7 +146,7 @@ module "azurerm_cosmosdb_account" {
   location = "uksouth"
   offer_type = "Standard"
   kind = "MongoDB"
-  cosmos_db_name = "cmp-cosmos-mongo-db"
+  cosmos_db_name = "cmp-cosmos-mongo-db-tf"
 }
 
 module "azurerm_network_security_group" {
@@ -154,7 +154,7 @@ module "azurerm_network_security_group" {
   resource_group_name = module.azurerm_resource_group.resource_group_name
   location = "uksouth"
   version = "4.1.0"
-  security_group_name = "cmp-nsg"
+  security_group_name = "cmp-nsg-tf"
   
   # security_rule {
   #   name                       = "cmp-nsg123"
