@@ -17,7 +17,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "example" {
   resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = var.vmss_sku
-  instances           = 1
+  instances           = 3
   admin_username      = "adminuser"
   admin_password = "joannaeno123$"
   computer_name_prefix = "vmss-cmp"
